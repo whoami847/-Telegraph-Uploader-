@@ -54,8 +54,6 @@ except ImportError:
 
 # Get logging configurations
 logging.config.fileConfig("logging.conf")
-logging.getLogger().setLevel(logging.ERROR)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 # FastAPI app for health check
@@ -77,14 +75,14 @@ class Bot(Client):  # pylint: disable=too-many-ancestors
         )
 
     async def start(self):
-        """Starts the bot and prints the bot username."""
+        """Starts the bot and logs the bot username."""
         await super().start()
-        print(f"Bot Started at @{self.me.username}")
+        logger.info(f"Bot Started at @{self.me.username}")
 
     async def stop(self, *args, **kwargs):
-        """Stops the bot and prints a stop message."""
+        """Stops the bot and logs a stop message."""
         await super().stop(*args, **kwargs)
-        print("Session Stopped...")
+        logger.info("Session Stopped...")
 
 bot = Bot()
 EMOJI_PATTERN = re.compile(r'<emoji id="\d+">')
@@ -93,39 +91,40 @@ TITLE_PATTERN = re.compile(r"^title:?\s*(.*)", re.IGNORECASE | re.MULTILINE)
 @bot.on_message(filters.command("start") & filters.incoming & filters.private)
 async def start_handlers(_: Bot, message: Message) -> None:
     """Handles the /start command to provide a welcome message to the user."""
+    logger.debug(f"Received /start command from {message.from_user.id}")
     await message.reply(
         "ʜᴇʟʟᴏ **ᴅᴇᴀʀ!**\n\n"
-        "👋 **ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴜᴪʟᴏᴀᴅᴇʀ ʙᴏᴛ!**\n\n"
+        "👋 **ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ!**\n\n"
         "ᴡɪᴛʜ ᴛʜɪꜱ ʙᴏᴛ, ʏᴏᴜ ᴄᴀɴ:\n"
         " • **ᴜᴘʟᴏᴀᴅ ᴘʜᴏᴛᴏꜱ**: ꜱᴇɴᴅ ᴍᴇ ᴀ ᴘʜᴏᴛᴏ, ᴀɴᴅ "
-        "ɪ'ʟʟ ᴜᴪʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀ.ᴘʜ, ᴘʀᴏᴠɪᴅɪɴɢ ʏᴏᴜ ᴡɪᴛʜ ᴀ ʟɪɴᴋ.\n"
+        "ɪ'ʟʟ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀ.ᴘʜ, ᴘʀᴏᴠɪᴅɪɴɢ ʏᴏᴜ ᴡɪᴛʜ ᴀ ʟɪɴᴋ.\n"
         " • **ᴄʀᴇᴀᴛᴇ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋꜱ**: ꜱᴇɴᴅ ᴍᴇ ᴀ ᴛᴇxᴛ, ᴀɴᴅ "
-        "ɪ'ʟʟ ᴄʀᴇᴀᴛᴇ ᴀ�ɴ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋ ꜰᴏʀ ɪᴛ.\n\n"
+        "ɪ'ʟʟ ᴄʀᴇᴀᴛᴇ ᴀɴ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋ ꜰᴏʀ ɪᴛ.\n\n"
         "📌 **ᴜꜱᴀɢᴇ**:\n"
-        "• ꜱᴇɴᴅ ᴀ ᴘʜᴏᴛᴏ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ ᴜᴪʟᴏᴀᴅ ɪᴛ.\n"
+        "• ꜱᴇɴᴅ ᴀ ᴘʜᴏᴛᴏ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ ᴜᴘʟᴏᴀᴅ ɪᴛ.\n"
         "• ꜱᴇɴᴅ ᴀ ᴛᴇxᴛ ᴍᴇꜱꜱᴀɢᴇ ɪɴ ᴛʜᴇ ꜰᴏʀᴍᴀᴛ ᴍᴇɴᴛɪᴏɴᴇᴅ ʙᴇʟᴏᴡ "
-        "ᴛᴏ ᴄʀᴇᴀᴛᴇ ᴀ ᴛᴇʟᴇɢʀᴀ.ᴪʜ ᴪᴏꜱᴛ.\n\n"
-        "🔗 **ᴀʙᴏᴜᴛ ᴛᴇʟᴇɢʀᴀ.ᴪʜ**:\n"
-        "ᴛᴇʟᴇɢʀᴀ.ᴪʜ ɪꜱ ᴀ ᴍɪɴɪᴍᴀʟɪꜱᴛ ᴪᴜʙʟɪꜱʜɪɴɢ ᴛᴏᴏʟ ᴛʜᴀᴛ ᴀʟʟᴏᴡꜱ "
-        "ʏᴏᴜ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʀɪᴄʜʟʏ ꜰᴏʀᴍᴀᴛᴛᴇᴅ ᴪᴏꜱᴛꜱ ᴡɪᴛʜ ᴪʜᴏᴛᴏꜱ, ᴠɪᴅᴇᴏꜱ, ᴀɴᴅ "
+        "ᴛᴏ ᴄʀᴇᴀᴛᴇ ᴀ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴘᴏꜱᴛ.\n\n"
+        "🔗 **ᴀʙᴏᴜᴛ ᴛᴇʟᴇɢʀᴀ.ᴘʜ**:\n"
+        "ᴛᴇʟᴇɢʀᴀ.ᴘʜ ɪꜱ ᴀ ᴍɪɴɪᴍᴀʟɪꜱᴛ ᴘᴜʙʟɪꜱʜɪɴɢ ᴛᴏᴏʟ ᴛʜᴀᴛ ᴀʟʟᴏᴡꜱ "
+        "ʏᴏᴜ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʀɪᴄʜʟʏ ꜰᴏʀᴍᴀᴛᴛᴇᴅ ᴘᴏꜱᴛꜱ ᴡɪᴛʜ ᴘʜᴏᴛᴏꜱ, ᴠɪᴅᴇᴏꜱ, ᴀɴᴅ "
         "ᴀʟʟ ꜱᴏʀᴛꜱ ᴏꜰ ᴇᴍʙᴇᴅᴅᴇᴅ ᴄᴏɴᴛᴇɴᴛ.\n\n"
-        "🌟 **ɢᴇᴛ ꜱᴛᴀʀᴛᴇᴅ**: ᴊᴜꜱᴛ ꜱᴇɴᴅ ᴀ ᴪʜᴏᴛᴏ ᴏʀ ᴛᴇxᴛ ᴍᴇꜱꜱᴀɢᴇ, ᴀɴᴅ ʟᴇᴛ ᴍᴇ ᴅᴏ ᴛʜᴇ ʀᴇꜱᴛ!\n\n"
+        "🌟 **ɢᴇᴛ ꜱᴛᴀʀᴛᴇᴅ**: ᴊᴜꜱᴛ ꜱᴇɴᴅ ᴀ ᴘʜᴏᴛᴏ ᴏʀ ᴛᴇxᴛ ᴍᴇꜱꜱᴀɢᴇ, ᴀɴᴅ ʟᴇᴛ ᴍᴇ ᴅᴏ ᴛʜᴇ ʀᴇꜱᴛ!\n\n"
         "🛠 **ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ**: "
         "[ꜰᴏʀᴋ ᴏɴ ɢɪᴛʜᴜʙ](https://github.com/Ns-AnoNymouS/Telegraph-Uploader)\n\n"
         "📝 **ᴄᴜꜱᴛᴏᴍ ᴛɪᴛʟᴇ**:\n"
         "```txt\n"
         "ᴛɪᴛʟᴇ: {title}\n{content}```\n\n"
-        "📝 **ᴇxᴀᴍᴪʟᴇ**:\n"
+        "📝 **ᴇxᴀᴍᴘʟᴇ**:\n"
         "```txt\n"
-        "ᴛɪᴛʟᴇ: ᴍʏ ꜰɪʀꜱᴛ ᴛᴇʟᴇɢʀᴀᴪʜ ᴪᴏꜱᴛ\n"
-        "ᴛʜɪꜱ ɪꜱ ᴛʜᴇ ᴄᴏɴᴛᴇɴᴛ ᴏꜰ ᴍʏ ꜰɪʀꜱᴛ ᴛᴇʟᴇɢʀᴀᴪʜ ᴪᴏꜱᴛ!\n"
-        "ɪ'ᴍ ᴜꜱɪɴɢ ᴛʜᴇ ᴛᴇʟᴇɢʀᴀ.ᴪʜ ᴜᴪʟᴏᴀᴅᴇʀ ʙᴏᴛ ᴛᴏ ᴪᴜʙʟɪꜱʜ ᴛʜɪꜱ.\n\n"
+        "ᴛɪᴛʟᴇ: ᴍʏ ꜰɪʀꜱᴛ ᴛᴇʟᴇɢʀᴀᴘʜ ᴘᴏꜱᴛ\n"
+        "ᴛʜɪꜱ ɪꜱ ᴛʜᴇ ᴄᴏɴᴛᴇɴᴛ ᴏꜰ ᴍʏ ꜰɪʀꜱᴛ ᴛᴇʟᴇɢʀᴀᴘʜ ᴘᴏꜱᴛ!\n"
+        "ɪ'ᴍ ᴜꜱɪɴɢ ᴛʜᴇ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ ᴛᴏ ᴘᴜʙʟɪꜱʜ ᴛʜɪꜱ.\n\n"
         "ʜᴇʀᴇ'ꜱ ᴀ ʟɪꜱᴛ ᴏꜰ ᴡʜᴀᴛ ɪ ʟɪᴋᴇ:\n"
-        "- ᴪʀᴏɢʀᴀᴍᴍɪɴɢ 💻\n"
+        "- ᴘʀᴏɢʀᴀᴍᴍɪɴɢ 💻\n"
         "- ʀᴇᴀᴅɪɴɢ 📚\n"
         "- ᴛʀᴀᴠᴇʟɪɴɢ ✈️\n"
         "- ᴍᴜꜱɪᴄ 🎵\n\n"
-        "ʏᴏᴜ ᴄᴀɴ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴪᴏꜱᴛꜱ ᴛᴏᴏ. ᴊᴜꜱᴛ ꜰᴏʟʟᴏᴡ ᴛʜᴇ ꜰᴏʀᴮᴀᴛ ᴀɴᴅ ᴇɴᴊᴏʏ!"
+        "ʏᴏᴜ ᴄᴀɴ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴘᴏꜱᴛꜱ ᴛᴏᴏ. ᴊᴜꜱᴛ ꜰᴏʟʟᴏᴡ ᴛʜᴇ ꜰᴏʀᴍᴀᴛ ᴀɴᴅ ᴇɴᴊᴏʏ!"
         "```\n",
         disable_web_page_preview=True,
         quote=True,
@@ -138,7 +137,7 @@ async def photo_handler(_: Bot, message: Message) -> None:
     and sending the link to the user.
     """
     try:
-        msg = await message.reply_text("ᴪʀᴏᴄᴇꜱꜱɪɴɢ...⏳", quote=True)
+        msg = await message.reply_text("ᴘʀᴏᴄᴇꜱꜱɪɴɢ...⏳", quote=True)
         location = f"./{message.from_user.id}{time.time()}/"
         os.makedirs(location, exist_ok=True)
         start_time = time.time()
@@ -164,7 +163,7 @@ async def text_handler(_: Bot, message: Message) -> None:
     and sending the link to the user.
     """
     try:
-        msg = await message.reply_text("ᴪʀᴏᴄᴇꜱꜱɪɴɢ...⏳", quote=True)
+        msg = await message.reply_text("ᴘʀᴏᴄᴇꜱꜱɪɴɢ...⏳", quote=True)
         short_name = "Ns Bots"
         user = Telegraph().create_account(short_name=short_name)
         access_token = user["access_token"]
@@ -198,12 +197,14 @@ async def text_handler(_: Bot, message: Message) -> None:
         await msg.edit(f"**ᴇʀʀᴏʀ:**\n{e}")
 
 async def main():
-    # Start the Telegram bot
-    await bot.start()
-    # Start the web server
+    # Start the web server in the background
     config = uvicorn.Config(app=app, host="0.0.0.0", port=8080)
     server = uvicorn.Server(config)
-    await server.serve()
+    asyncio.create_task(server.serve())
+    # Start the Telegram bot
+    await bot.start()
+    # Keep the bot running
+    await bot.idle()
 
 if __name__ == "__main__":
     asyncio.run(main())
