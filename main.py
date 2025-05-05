@@ -90,38 +90,38 @@ async def start_handlers(_: Bot, message: Message) -> None:
     """Handles the /start command to provide a welcome message to the user."""
 
     await message.reply(
-        "Hello **Dear!**\n\n"
-        "👋 **Welcome to the Telegra.ph Uploader Bot!**\n\n"
-        "With this bot, you can:\n"
-        " • **Upload Photos**: Send me a photo, and "
-        "I'll upload it to Telegra.ph, providing you with a link.\n"
-        " • **Create Instant View Links**: Send me a text, and "
-        "I'll create an instant view link for it.\n\n"
-        "📌 **Usage**:\n"
-        "• Send a photo directly to upload it.\n"
-        "• Send a text message in the format mentioned below "
-        "to create a Telegra.ph post.\n\n"
-        "🔗 **About Telegra.ph**:\n"
-        "Telegra.ph is a minimalist publishing tool that allows "
-        "you to create richly formatted posts with photos, videos, and "
-        "all sorts of embedded content.\n\n"
-        "🌟 **Get Started**: Just send a photo or text message, and let me do the rest!\n\n"
-        "🛠 **Source Code**: "
-        "[Fork on GitHub](https://github.com/Ns-AnoNymouS/Telegraph-Uploader)\n\n"
-        "📝 **Custom Title**:\n"
+        "ʜᴇʟʟᴏ **ᴅᴇᴀʀ!**\n\n"
+        "👋 **ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ!**\n\n"
+        "ᴡɪᴛʜ ᴛʜɪꜱ ʙᴏᴛ, ʏᴏᴜ ᴄᴀɴ:\n"
+        " • **ᴜᴘʟᴏᴀᴅ ᴘʜᴏᴛᴏꜱ**: ꜱᴇɴᴅ ᴍᴇ ᴀ ᴘʜᴏᴛᴏ, ᴀɴᴅ "
+        "ɪ'ʟʟ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀ.ᴘʜ, ᴘʀᴏᴠɪᴅɪɴɢ ʏᴏᴜ ᴡɪᴛʜ ᴀ ʟɪɴᴋ.\n"
+        " • **ᴄʀᴇᴀᴛᴇ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋꜱ**: ꜱᴇɴᴅ ᴍᴇ ᴀ ᴛᴇxᴛ, ᴀɴᴅ "
+        "ɪ'ʟʟ ᴄʀᴇᴀᴛᴇ ᴀɴ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋ ꜰᴏʀ ɪᴛ.\n\n"
+        "📌 **ᴜꜱᴀɢᴇ**:\n"
+        "• ꜱᴇɴᴅ ᴀ ᴘʜᴏᴛᴏ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ ᴜᴘʟᴏᴀᴅ ɪᴛ.\n"
+        "• ꜱᴇɴᴅ ᴀ ᴛᴇxᴛ ᴍᴇꜱꜱᴀɢᴇ ɪɴ ᴛʜᴇ ꜰᴏʀᴍᴀᴛ ᴍᴇɴᴛɪᴏɴᴇᴅ ʙᴇʟᴏᴡ "
+        "ᴛᴏ ᴄʀᴇᴀᴛᴇ ᴀ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴘᴏꜱᴛ.\n\n"
+        "🔗 **ᴀʙᴏᴜᴛ ᴛᴇʟᴇɢʀᴀ.ᴘʜ**:\n"
+        "ᴛᴇʟᴇɢʀᴀ.ᴘʜ ɪꜱ ᴀ ᴍɪɴɪᴍᴀʟɪꜱᴛ ᴘᴜʙʟɪꜱʜɪɴɢ ᴛᴏᴏʟ ᴛʜᴀᴛ ᴀʟʟᴏᴡꜱ "
+        "ʏᴏᴜ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʀɪᴄʜʟʏ ꜰᴏʀᴍᴀᴛᴛᴇᴅ ᴘᴏꜱᴛꜱ ᴡɪᴛʜ ᴘʜᴏᴛᴏꜱ, ᴠɪᴅᴇᴏꜱ, ᴀɴᴅ "
+        "ᴀʟʟ ꜱᴏʀᴛꜱ ᴏꜰ ᴇᴍʙᴇᴅᴅᴇᴅ ᴄᴏɴᴛᴇɴᴛ.\n\n"
+        "🌟 **ɢᴇᴛ ꜱᴛᴀʀᴛᴇᴅ**: ᴊᴜꜱᴛ ꜱᴇɴᴅ ᴀ ᴘʜᴏᴛᴏ ᴏʀ ᴛᴇxᴛ ᴍᴇꜱꜱᴀɢᴇ, ᴀɴᴅ ʟᴇᴛ ᴍᴇ ᴅᴏ ᴛʜᴇ ʀᴇꜱᴛ!\n\n"
+        "🛠 **ꜱᴏᴜʀᴄᴇ ᴄᴏᴅᴇ**: "
+        "[ꜰᴏʀᴋ ᴏɴ ɢɪᴛʜᴜʙ](https://github.com/Ns-AnoNymouS/Telegraph-Uploader)\n\n"
+        "📝 **ᴄᴜꜱᴛᴏᴍ ᴛɪᴛʟᴇ**:\n"
         "```txt\n"
-        "Title: {title}\n{content}```\n\n"
-        "📝 **Eample**:\n"
+        "ᴛɪᴛʟᴇ: {title}\n{content}```\n\n"
+        "📝 **ᴇxᴀᴍᴘʟᴇ**:\n"
         "```txt\n"
-        "Title: My First Telegraph Post\n"
-        "This is the content of my first Telegraph post!\n"
-        "I'm using the Telegra.ph Uploader Bot to publish this.\n\n"
-        "Here's a list of what I like:\n"
-        "- Programming 💻\n"
-        "- Reading 📚\n"
-        "- Traveling ✈️\n"
-        "- Music 🎵\n\n"
-        "You can create your own posts too. Just follow the format and enjoy!"
+        "ᴛɪᴛʟᴇ: ᴍʏ ꜰɪʀꜱᴛ ᴛᴇʟᴇɢʀᴀᴘʜ ᴘᴏꜱᴛ\n"
+        "ᴛʜɪꜱ ɪꜱ ᴛʜᴇ ᴄᴏɴᴛᴇɴᴛ ᴏꜰ ᴍʏ ꜰɪʀꜱᴛ ᴛᴇʟᴇɢʀᴀᴘʜ ᴘᴏꜱᴛ!\n"
+        "ɪ'ᴍ ᴜꜱɪɴɢ ᴛʜᴇ ᴛᴇʟᴇɢʀᴀ.ᴘʜ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ ᴛᴏ ᴘᴜʙʟɪꜱʜ ᴛʜɪꜱ.\n\n"
+        "ʜᴇʀᴇ'ꜱ ᴀ ʟɪꜱᴛ ᴏꜰ ᴡʜᴀᴛ ɪ ʟɪᴋᴇ:\n"
+        "- ᴘʀᴏɢʀᴀᴍᴍɪɴɢ 💻\n"
+        "- ʀᴇᴀᴅɪɴɢ 📚\n"
+        "- ᴛʀᴀᴠᴇʟɪɴɢ ✈️\n"
+        "- ᴍᴜꜱɪᴄ 🎵\n\n"
+        "ʏᴏᴜ ᴄᴀɴ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴘᴏꜱᴛꜱ ᴛᴏᴏ. ᴊᴜꜱᴛ ꜰᴏʟʟᴏᴡ ᴛʜᴇ ꜰᴏʀᴍᴀᴛ ᴀɴᴅ ᴇɴᴊᴏʏ!"
         "```\n",
         disable_web_page_preview=True,
         quote=True,
@@ -136,7 +136,7 @@ async def photo_handler(_: Bot, message: Message) -> None:
     """
 
     try:
-        msg = await message.reply_text("Processing....⏳", quote=True)
+        msg = await message.reply_text("ᴘʀᴏᴄᴇꜱꜱɪɴɢ...⏳", quote=True)
         location = f"./{message.from_user.id}{time.time()}/"
         start_time = time.time()
         file = await message.download(
@@ -151,7 +151,7 @@ async def photo_handler(_: Bot, message: Message) -> None:
         pass
     except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
-        await msg.edit(f"**Error:**\n{e}")
+        await msg.edit(f"**ᴇʀʀᴏʀ:**\n{e}")
 
 
 @bot.on_message(filters.text & filters.incoming & filters.private)
@@ -163,7 +163,7 @@ async def text_handler(_: Bot, message: Message) -> None:
     """
 
     try:
-        msg = await message.reply_text("Processing....⏳", quote=True)
+        msg = await message.reply_text("ᴘʀᴏᴄᴇꜱꜱɪɴɢ...⏳", quote=True)
 
         short_name = "Ns Bots"
         user = Telegraph().create_account(short_name=short_name)
@@ -194,10 +194,10 @@ async def text_handler(_: Bot, message: Message) -> None:
         await msg.edit(f"https://telegra.ph/{path}")
     except ValueError as e:
         logger.error(e)
-        await msg.edit("Unable to generate instant view link.")
+        await msg.edit("ᴜɴᴀʙʟᴇ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋ.")
     except Exception as e:  # pylint: disable=broad-exception-caught
         logger.error(e)
-        await msg.edit(f"**Error:**\n{e}")
+        await msg.edit(f"**ᴇʀʀᴏʀ:**\n{e}")
 
 
 if __name__ == "__main__":
