@@ -37,15 +37,19 @@ import re
 import time
 import logging
 import logging.config
+import asyncio
+from threading import Thread
 
 from telegraph import upload_file, Telegraph
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from fastapi import FastAPI
+from uvicorn import Config, Server
 from config import Config
 from utils import progress
 
 try:
-    import uvloop # https://docs.pyrogram.org/topics/speedups#uvloop
+    import uvloop  # https://docs.pyrogram.org/topics/speedups#uvloop
     uvloop.install()
 except ImportError:
     pass
@@ -55,6 +59,19 @@ logging.config.fileConfig("logging.conf")
 logging.getLogger().setLevel(logging.ERROR)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
+
+# FastAPI app for health check
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"status": "healthy"}
+
+# Uvicorn server setup
+def run_web_server():
+    config = Config(app=app, host="0.0.0.0", port=8080)
+    server = Server(config)
+    asyncio.run(server.serve())
 
 class Bot(Client):  # pylint: disable=too-many-ancestors
     """Telegram bot client for uploading photos and creating posts on Telegra.ph."""
@@ -90,7 +107,7 @@ async def start_handlers(_: Bot, message: Message) -> None:
         "ᴡɪᴛʜ ᴛʜɪꜱ ʙᴏᴛ, ʏᴏᴜ ᴄᴀɴ:\n"
         " • **ᴜᴘʟᴏᴀᴅ ᴘʜᴏᴛᴏꜱ**: ꜱᴇɴᴅ ᴍᴇ ᴀ ᴘʜᴏᴛᴏ, ᴀɴᴅ "
         "ɪ'ʟʟ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀ.ᴘʜ, ᴘʀᴏᴠɪᴅɪɴɢ ʏᴏᴜ ᴡɪᴛʜ ᴀ ʟɪɴᴋ.\n"
-        " • **ᴄʀᴇᴀᴛᴇ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋꜱ**: ꜱᴇɴᴇ ᴍᴇ ᴀ ᴛᴇxᴛ, ᴀɴᴅ "
+        " • **ᴄʀᴇᴀᴛᴇ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋꜱ**: ꜱᴇɴᴅ ᴍᴇ ᴀ ᴛᴇxᴛ, ᴀɴᴅ "
         "ɪ'ʟʟ ᴄʀᴇᴀᴛᴇ ᴀɴ ɪɴꜱᴛᴀɴᴛ ᴠɪᴇᴡ ʟɪɴᴋ ꜰᴏʀ ɪᴛ.\n\n"
         "📌 **ᴜꜱᴀɢᴇ**:\n"
         "• ꜱᴇɴᴅ ᴀ ᴘʜᴏᴛᴏ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ ᴜᴘʟᴏᴀᴅ ɪᴛ.\n"
@@ -189,4 +206,8 @@ async def text_handler(_: Bot, message: Message) -> None:
         await msg.edit(f"**ᴇʀʀᴏʀ:**\n{e}")
 
 if __name__ == "__main__":
+    # Start the web server in a separate thread
+    web_thread = Thread(target=run_web_server)
+    web_thread.start()
+    # Run the Telegram bot
     bot.run()
